@@ -1,0 +1,46 @@
+def longMul(mplier, mplicand):
+    '''
+        user have to add the extra 0(s) to make the bits in multiplicand same bit sized as the multiplier.
+    '''
+    print('LONG MULT')
+    print(
+        f'\nDecimal: {int(mplier,2)} x {int(mplicand,2)} = {int(mplier,2)*int(mplicand,2)} ')
+    prod = '0'
+    def sl(bi): return (bi[1:])+'0'
+    def sr(bi): return '0'+(bi[0:-1])
+    for n, i in enumerate(reversed(mplier)):
+        if i == '1':
+            prod = str(bin(int(mplicand, 2) + int(prod, 2)))
+        mplicand = sl(mplicand)
+        mplier = sr(mplier)
+        print(
+            f'Iteration: {n+1} :\nMultiplicand: {mplicand}    Multiplier: {mplier}    Product: {prod}\n')
+
+
+def optMul(mplier, mplicand):
+    '''
+    both number's bits should be equal.
+    '''
+    print('Optimized MULT')
+    print(
+        f'\nDecimal: {int(mplier,2)} x {int(mplicand,2)} = {int(mplier,2)*int(mplicand,2)} ')
+    assert (len(mplicand) == len(mplier)), 'Not equal bits'
+    prod = ''
+    for _ in mplier:
+        prod += '0'
+    prod += mplier
+    half = int((len(prod)/2))
+    def sr(bi): return '0'+(bi[0:-1])
+
+    for n, i in enumerate(reversed(mplier)):
+        if i == '1':
+            prodf1 = str(bin(int(prod[0:half], 2) + int(mplicand, 2)))
+            prod = str(prodf1).replace('b', '')[1:] + prod[half:]
+        print(
+            f'Iteration: {n+1} :\nMultiplicand: {mplicand}    Multiplier: {mplier}\nProduct: \nadd : {prod}')
+        prod = sr(prod)
+        print(f'shift {prod}\n')
+
+
+#optMul(mplier='1010', mplicand='1100') #both number's bits should be equal.
+longMul(mplier='1010', mplicand='00001100') #user have to add the extra 0(s) to make the bits in multiplicand same bit sized as the multiplier.
